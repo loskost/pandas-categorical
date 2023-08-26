@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pandas-categorical"
+version = "0.1.0"
+description = "A set of functions for working with categorical columns in pandas"
+authors = ["KonstantinLosev <loskost@ya.ru>"]
+readme = "README.md"
+packages = [{include = "pandas_categorical"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.0.3"
+numpy = "^1.25.2"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.286"
+black = "^23.7.0"
+pyright = "^1.1.324"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
