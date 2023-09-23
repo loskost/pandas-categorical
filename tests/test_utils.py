@@ -1,12 +1,17 @@
-import unittest
-import pandas as pd
+from unittest import TestCase
+from typing import Tuple
+
 import numpy as np
+import pandas as pd
 from pandas.testing import assert_frame_equal, assert_series_equal
+from pandas_categorical.utils import (
+    cat_astype,
+    concat_categorical,
+    merge_categorical
+)
 
-from pandas_categorical.utils import concat_categorical, merge_categorical, cat_astype
 
-
-class TestConcatCategirical(unittest.TestCase):
+class TestConcatCategirical(TestCase):
     def test_output_type(self):
         df_1 = pd.DataFrame()
         df_2 = pd.DataFrame()
@@ -190,9 +195,9 @@ class TestConcatCategirical(unittest.TestCase):
         assert_frame_equal(res, answer)
 
 
-class TestMergeCategirical(unittest.TestCase):
+class TestMergeCategirical(TestCase):
     @staticmethod
-    def get_artificial_data() -> tuple[pd.DataFrame, pd.DataFrame]:
+    def get_artificial_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
         df_1 = pd.DataFrame({"a": ["key-1", "key-2"], "b": [1, 2]})
         df_2 = pd.DataFrame({"a": ["key-3", "key-2"], "c": [3, 4]})
         return df_1, df_2
@@ -275,7 +280,7 @@ class TestMergeCategirical(unittest.TestCase):
         assert_frame_equal(res, answer)
 
 
-class TestCatAstype(unittest.TestCase):
+class TestCatAstype(TestCase):
     def test_no_return(self):
         self.assertIs(cat_astype(pd.DataFrame()), None)
 
