@@ -1,10 +1,11 @@
-import pandas as pd
+from typing import Mapping, Union, List, Optional, Iterable, Sequence
+
 import numpy as np
-from collections.abc import Iterable, Sequence
+import pandas as pd
 import pandas.core.common as com
 
 
-def concat_categorical(dfs: list[pd.DataFrame], *args, **kwargs) -> pd.DataFrame:
+def concat_categorical(dfs: Iterable[pd.DataFrame], *args, **kwargs) -> pd.DataFrame:
     """
     Concatenate while preserving categorical columns.
 
@@ -56,9 +57,9 @@ def merge_categorical(
 
 def cat_astype(
     data: pd.DataFrame,
-    cat_cols: Iterable[str] | None = None,
-    sub_dtypes: dict[str, type | str] | None = None,
-    ordered_cols: set[str] | None = None,
+    cat_cols: Optional[Iterable[str]] = None,
+    sub_dtypes: Optional[Mapping[str, Union[type, str]]] = None,
+    ordered_cols: Optional[Iterable[str]] = None,
     remove_unused_categories: bool = False,
 ) -> None:
     """
@@ -127,8 +128,8 @@ def _union_categories(dfs: Sequence[pd.DataFrame]) -> None:
 def _union_left_right_categories(
     left: pd.DataFrame,
     right: pd.DataFrame,
-    left_on: list[str],
-    right_on: list[str],
+    left_on: List[str],
+    right_on: List[str],
 ) -> None:
 
     left_cat_on = left.select_dtypes(include="category").columns.intersection(left_on)
