@@ -3,6 +3,3 @@
 __pycache__
 *.parquet
 .DS_Store
-build/
-dist/
-.python-version
