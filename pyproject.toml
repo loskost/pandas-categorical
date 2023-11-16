@@ -1,20 +1,45 @@
 [tool.poetry]
 name = "pandas-categorical"
-version = "0.1.0"
+version = "1.0.0"
 description = "A set of functions for working with categorical columns in pandas"
 authors = ["KonstantinLosev <loskost@ya.ru>"]
+license = "MIT"
+homepage = "https://github.com/loskost/pandas-categorical"
+repository = "https://github.com/loskost/pandas-categorical"
 readme = "README.md"
 packages = [{include = "pandas_categorical"}]
+keywords = [
+    "data",
+    "datascience",
+    "pandas"
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+]
 
 [tool.poetry.dependencies]
-python = "^3.10"
-pandas = "^2.0.3"
-numpy = "^1.25.2"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.0.286"
-black = "^23.7.0"
-pyright = "^1.1.324"
+python = ">=3.7, <3.12"
+pandas = [
+    {version = ">=1.0.0, <1.4.0", python = "~3.7"},
+    {version = "^1.4.0", python = "~3.8"},
+    {version = "^2.0.0", python = ">=3.9, <3.12"},
+]
+numpy = [
+    {version = ">=1.19.0, <1.22.0", python = "~3.7"},
+    {version = ">=1.22.0, <1.25.0", python = "~3.8"},
+    {version = ">=1.25.0", python = ">=3.9, <3.12"},
+]
 
 [build-system]
 requires = ["poetry-core"]
