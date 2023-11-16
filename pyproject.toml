@@ -1,10 +1,32 @@
 [tool.poetry]
 name = "pandas-categorical"
-version = "0.2.1"
+version = "1.0.0"
 description = "A set of functions for working with categorical columns in pandas"
 authors = ["KonstantinLosev <loskost@ya.ru>"]
+license = "MIT"
+homepage = "https://github.com/loskost/pandas-categorical"
+repository = "https://github.com/loskost/pandas-categorical"
 readme = "README.md"
 packages = [{include = "pandas_categorical"}]
+keywords = [
+    "data",
+    "datascience",
+    "pandas"
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Operating System :: OS Independent",
+    "Topic :: Utilities",
+    "License :: OSI Approved :: MIT License",
+]
 
 [tool.poetry.dependencies]
 python = ">=3.7, <3.12"
