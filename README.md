@@ -67,7 +67,7 @@ Let's try to outline a number of problems and ways to solve them.
 
 ## 1. Categorical types are easy to lose
 
-Suppose you want to connect two datasets into one using `pd.concat(..., axis=0)'. Datasets contain columns with categorical types.
+Suppose you want to connect two datasets into one using `pd.concat(..., axis=0)`. Datasets contain columns with categorical types.
 If the column categories of the source datasets are different, then `pandas` it does not combine multiple values, but simply resets their default type (for example, `object`, `int`, ...).
 In other words,
 $$\textcolor{red}{category1} + \textcolor{green}{category2} = object$$
