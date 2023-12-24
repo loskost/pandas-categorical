@@ -1,4 +1,9 @@
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pandas-categorical)
+![PyPI](https://img.shields.io/pypi/v/pandas-categorical?label=pypi%20pandas-categorical)
+![CI - Test](https://github.com/loskost/pandas-categorical/actions/workflows/testing_package.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 The package contains just a few features that make using pandas categorical types easier to use.
 The main purpose of using categorical types is to reduce RAM consumption when working with large datasets. Experience shows that on average, there is a decrease of 2 times (for datasets of several GB, this is very significant). The full justification of the reasons and examples will be given below.
@@ -75,7 +80,7 @@ $$\textcolor{red}{category1} + \textcolor{red}{category1} = \textcolor{red}{cate
 But we would like to observe a different behavior:
 $$\textcolor{red}{category1} + \textcolor{green}{category2} = \textcolor{blue}{category3}$$
 $$(\textcolor{blue}{category3} = \textcolor{red}{category1} \cup \textcolor{green}{category2})$$
-As a result, you need to monitor the reduction of categories before actions such as `merge` or `concat'.
+As a result, you need to monitor the reduction of categories before actions such as `merge` or `concat`.
 ## 2.  Categories type control
 
 When you do a type conversion
@@ -126,9 +131,9 @@ To process large datasets, you need to minimize the creation of copies of even i
 
 ## 6. Data storage in parquet format
 
-When using `pd.to_parquet(path, engine='pyarrow')` and `pd.read_parque(path, engine='pyarrow')`categorical types of some columns can be reset to normal. To solve this problem, you can use `engine='fast parquet'. 
+When using `pd.to_parquet(path, engine='pyarrow')` and `pd.read_parque(path, engine='pyarrow')`categorical types of some columns can be reset to normal. To solve this problem, you can use `engine='fastparquet'`. 
 
-Note 1: `fastparquet` usually runs a little slower than `pyarrow'.
+Note 1: `fastparquet` usually runs a little slower than `pyarrow`.
 
 Note 2: `pyarrow` and `fastparquet` cannot be used together (for example, save by one and read by the other). This can lead to data loss.
 
@@ -175,7 +180,10 @@ dtype: object
 
 # Examples
 
-[Jupiter notebook with examples](https://www.kaggle.com/code/loskost/problems-of-pandas-categorical-dtypes) of problems is posted on kaggle. A copy can be found in the `examples/` folder.
+- [Jupiter notebook with examples](https://www.kaggle.com/code/loskost/problems-of-pandas-categorical-dtypes) of problems is posted on kaggle. A copy can be found in the `examples/` folder.
+- [Jupiter notebook with solution](https://www.kaggle.com/code/loskost/problems-of-pandas-categorical-dtypes-solution) of problems. A copy can be found in the `examples/` folder.
+- Also, usage examples can be found in the tests folder.
+
 # Remarks
 
 1. Processing of categorical indexes has not yet been implemented.
