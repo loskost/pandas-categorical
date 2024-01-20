@@ -87,14 +87,9 @@ def cat_astype(
     already_cat = set(data.select_dtypes(include="category").columns)
     columns_to_transform = data.columns.intersection(list(cat_cols))
     for col in columns_to_transform:
-        if col not in already_cat and col in ordered_cols:
-            data[col] = pd.Categorical(
-                data[col].to_numpy(),
-                ordered=True,
-                categories=np.sort(data[col].dropna().unique()),
-            )
-        if col not in already_cat and col not in ordered_cols:
-            data[col] = data[col].astype("category")
+        if col not in already_cat:
+            is_ordered = col in ordered_cols
+            data[col] = data[col].astype(pd.CategoricalDtype(ordered=is_ordered))
         if (remove_unused_categories) and (
             data[col].dropna().unique().shape[0] != data[col].cat.categories.shape[0]
         ):
