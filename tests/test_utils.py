@@ -199,12 +199,12 @@ class TestMergeCategorical(TestCase):
         return df_1, df_2
 
     def test_output_type(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
         res = merge_categorical(df_1, df_2, on="a", how="left")
         self.assertIsInstance(res, pd.DataFrame)
 
     def test_standard_behavior(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
 
         answer = df_1.merge(df_2, on="a", how="left")
         res = merge_categorical(df_1, df_2, on="a", how="left")
@@ -212,7 +212,7 @@ class TestMergeCategorical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_1(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
 
         df_1 = df_1.astype({"a": "category"})
         df_2 = df_2.astype({"a": "category"})
@@ -224,7 +224,7 @@ class TestMergeCategorical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_2(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
 
         df_1 = df_1.astype("category")
         df_2 = df_2.astype("category")
@@ -236,7 +236,7 @@ class TestMergeCategorical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_3(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
         df_1.rename(columns={"a": "al"}, inplace=True)
         df_2.rename(columns={"a": "ar"}, inplace=True)
         df_1 = df_1.astype({"al": "category"})
@@ -258,7 +258,7 @@ class TestMergeCategorical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_4(self):
-        df_1, df_2 = TestMergeCategorical.get_artificial_data()
+        df_1, df_2 = self.get_artificial_data()
 
         df_1["a"] = pd.Categorical(
             df_1["a"], categories=np.sort(df_1["a"].dropna().unique()), ordered=True
