@@ -4,14 +4,10 @@ from typing import Tuple
 import numpy as np
 import pandas as pd
 from pandas.testing import assert_frame_equal, assert_series_equal
-from pandas_categorical.utils import (
-    cat_astype,
-    concat_categorical,
-    merge_categorical
-)
+from pandas_categorical.utils import cat_astype, concat_categorical, merge_categorical
 
 
-class TestConcatCategirical(TestCase):
+class TestConcatCategorical(TestCase):
     def test_output_type(self):
         df_1 = pd.DataFrame()
         df_2 = pd.DataFrame()
@@ -195,7 +191,7 @@ class TestConcatCategirical(TestCase):
         assert_frame_equal(res, answer)
 
 
-class TestMergeCategirical(TestCase):
+class TestMergeCategorical(TestCase):
     @staticmethod
     def get_artificial_data() -> Tuple[pd.DataFrame, pd.DataFrame]:
         df_1 = pd.DataFrame({"a": ["key-1", "key-2"], "b": [1, 2]})
@@ -203,12 +199,12 @@ class TestMergeCategirical(TestCase):
         return df_1, df_2
 
     def test_output_type(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
         res = merge_categorical(df_1, df_2, on="a", how="left")
         self.assertIsInstance(res, pd.DataFrame)
 
     def test_standard_behavior(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
 
         answer = df_1.merge(df_2, on="a", how="left")
         res = merge_categorical(df_1, df_2, on="a", how="left")
@@ -216,7 +212,7 @@ class TestMergeCategirical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_1(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
 
         df_1 = df_1.astype({"a": "category"})
         df_2 = df_2.astype({"a": "category"})
@@ -228,7 +224,7 @@ class TestMergeCategirical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_2(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
 
         df_1 = df_1.astype("category")
         df_2 = df_2.astype("category")
@@ -240,7 +236,7 @@ class TestMergeCategirical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_3(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
         df_1.rename(columns={"a": "al"}, inplace=True)
         df_2.rename(columns={"a": "ar"}, inplace=True)
         df_1 = df_1.astype({"al": "category"})
@@ -262,7 +258,7 @@ class TestMergeCategirical(TestCase):
         assert_frame_equal(res, answer)
 
     def test_categorical_columns_4(self):
-        df_1, df_2 = TestMergeCategirical.get_artificial_data()
+        df_1, df_2 = TestMergeCategorical.get_artificial_data()
 
         df_1["a"] = pd.Categorical(
             df_1["a"], categories=np.sort(df_1["a"].dropna().unique()), ordered=True
