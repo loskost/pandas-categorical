@@ -1,7 +1,6 @@
 from unittest import TestCase
 from typing import Tuple
 
-import numpy as np
 import pandas as pd
 from pandas.testing import assert_frame_equal, assert_series_equal
 from pandas_categorical.utils import cat_astype, concat_categorical, merge_categorical
@@ -76,116 +75,41 @@ class TestConcatCategorical(TestCase):
     def test_categorical_ordered_columns(self):
 
         df_1 = pd.DataFrame()
-        df_1["Integer"] = pd.Categorical(
-            values=pd.Series([1, 2], dtype=int),
-            categories=pd.Series([1, 2], dtype=int),
-            ordered=True,
+        df_1["Integer"] = pd.Series([1, 2], dtype=int)
+        df_1["Float"] = pd.Series([10.0, 20.0], dtype=float)
+        df_1["String"] = pd.Series(["1", "2"], dtype="string")
+        df_1["Object"] = pd.Series(["bla_1", float("nan")], dtype=object)
+        df_1["Date"] = pd.Series(
+            pd.date_range("2000-01-01", periods=2), dtype="datetime64[ns]"
         )
-        df_1["Float"] = pd.Categorical(
-            values=pd.Series([10.0, 20.0], dtype=float),
-            categories=pd.Series([10.0, 20.0], dtype=float),
-            ordered=True,
-        )
-        df_1["String"] = pd.Categorical(
-            values=pd.Series(["1", "2"], dtype="string"),
-            categories=pd.Series(["1", "2"], dtype="string"),
-            ordered=True,
-        )
-        df_1["Object"] = pd.Categorical(
-            values=pd.Series(["bla_1", float("nan")], dtype=object),
-            categories=pd.Series(["bla_1"], dtype=object),
-            ordered=True,
-        )
-        df_1["Date"] = pd.Categorical(
-            values=pd.Series(
-                pd.date_range("2000-01-01", periods=2), dtype="datetime64[ns]"
-            ),
-            categories=pd.Series(
-                pd.date_range("2000-01-01", periods=2), dtype="datetime64[ns]"
-            ),
-            ordered=True,
-        )
-        df_1["Bool"] = pd.Categorical(
-            values=pd.Series([True, True], dtype=bool),
-            categories=pd.Series([True], dtype=bool),
-            ordered=True,
-        )
+        df_1["Bool"] = pd.Series([True, True], dtype=bool)
+        df_1 = df_1.astype(pd.CategoricalDtype(ordered=True))
 
         df_2 = pd.DataFrame()
-        df_2["Integer"] = pd.Categorical(
-            values=pd.Series([3, 4], dtype=int),
-            categories=pd.Series([3, 4], dtype=int),
-            ordered=True,
+        df_2["Integer"] = pd.Series([3, 4], dtype=int)
+        df_2["Float"] = pd.Series([30.0, 40.0], dtype=float)
+        df_2["String"] = pd.Series(["3", "4"], dtype="string")
+        df_2["Object"] = pd.Series(["bla_2", float("nan")], dtype=object)
+        df_2["Date"] = pd.Series(
+            pd.date_range("2000-01-03", periods=2), dtype="datetime64[ns]"
         )
-        df_2["Float"] = pd.Categorical(
-            values=pd.Series([30.0, 40.0], dtype=float),
-            categories=pd.Series([30.0, 40.0], dtype=float),
-            ordered=True,
-        )
-        df_2["String"] = pd.Categorical(
-            values=pd.Series(["3", "4"], dtype="string"),
-            categories=pd.Series(["3", "4"], dtype="string"),
-            ordered=True,
-        )
-        df_2["Object"] = pd.Categorical(
-            values=pd.Series(["bla_2", float("nan")], dtype=object),
-            categories=pd.Series(["bla_2"], dtype=object),
-            ordered=True,
-        )
-        df_2["Date"] = pd.Categorical(
-            values=pd.Series(
-                pd.date_range("2000-01-03", periods=2), dtype="datetime64[ns]"
-            ),
-            categories=pd.Series(
-                pd.date_range("2000-01-03", periods=2), dtype="datetime64[ns]"
-            ),
-            ordered=True,
-        )
-        df_2["Bool"] = pd.Categorical(
-            values=pd.Series([False, False], dtype=bool),
-            categories=pd.Series([False], dtype=bool),
-            ordered=True,
-        )
+        df_2["Bool"] = pd.Series([False, False], dtype=bool)
+        df_2 = df_2.astype(pd.CategoricalDtype(ordered=True))
 
         answer = pd.concat([df_1, df_2], ignore_index=True)
         res = concat_categorical([df_1, df_2], ignore_index=True)
 
-        answer["Integer"] = pd.Categorical(
-            values=pd.Series([1, 2, 3, 4], dtype=int),
-            categories=pd.Series([1, 2, 3, 4], dtype=int),
-            ordered=True,
+        answer["Integer"] = pd.Series([1, 2, 3, 4], dtype=int)
+        answer["Float"] = pd.Series([10.0, 20.0, 30.0, 40.0], dtype=float)
+        answer["String"] = pd.Series(["1", "2", "3", "4"], dtype="string")
+        answer["Object"] = pd.Series(
+            ["bla_1", float("nan"), "bla_2", float("nan")], dtype=object
         )
-        answer["Float"] = pd.Categorical(
-            values=pd.Series([10.0, 20.0, 30.0, 40.0], dtype=float),
-            categories=pd.Series([10.0, 20.0, 30.0, 40.0], dtype=float),
-            ordered=True,
+        answer["Date"] = pd.Series(
+            pd.date_range("2000-01-01", periods=4), dtype="datetime64[ns]"
         )
-        answer["String"] = pd.Categorical(
-            values=pd.Series(["1", "2", "3", "4"], dtype="string"),
-            categories=pd.Series(["1", "2", "3", "4"], dtype="string"),
-            ordered=True,
-        )
-        answer["Object"] = pd.Categorical(
-            values=pd.Series(
-                ["bla_1", float("nan"), "bla_2", float("nan")], dtype=object
-            ),
-            categories=pd.Series(["bla_1", "bla_2"], dtype=object),
-            ordered=True,
-        )
-        answer["Date"] = pd.Categorical(
-            values=pd.Series(
-                pd.date_range("2000-01-01", periods=4), dtype="datetime64[ns]"
-            ),
-            categories=pd.Series(
-                pd.date_range("2000-01-01", periods=4), dtype="datetime64[ns]"
-            ),
-            ordered=True,
-        )
-        answer["Bool"] = pd.Categorical(
-            values=pd.Series([True, True, False, False], dtype=bool),
-            categories=pd.Series([False, True], dtype=bool),
-            ordered=True,
-        )
+        answer["Bool"] = pd.Series([True, True, False, False], dtype=bool)
+        answer = answer.astype(pd.CategoricalDtype(ordered=True))
 
         assert_series_equal(res.dtypes, answer.dtypes)
         assert_frame_equal(res, answer)
@@ -260,17 +184,12 @@ class TestMergeCategorical(TestCase):
     def test_categorical_columns_4(self):
         df_1, df_2 = self.get_artificial_data()
 
-        df_1["a"] = pd.Categorical(
-            df_1["a"], categories=np.sort(df_1["a"].dropna().unique()), ordered=True
-        )
-        df_2["a"] = pd.Categorical(
-            df_2["a"], categories=np.sort(df_2["a"].dropna().unique()), ordered=True
-        )
+        df_1["a"] = df_1["a"].astype(pd.CategoricalDtype(ordered=True))
+        df_2["a"] = df_2["a"].astype(pd.CategoricalDtype(ordered=True))
 
         answer = pd.merge(df_1, df_2, on="a", how="outer")
-        answer["a"] = pd.Categorical(
-            answer["a"], categories=np.sort(answer["a"].dropna().unique()), ordered=True
-        )
+        answer["a"] = answer["a"].astype(pd.CategoricalDtype(ordered=True))
+
         res = merge_categorical(df_1, df_2, on="a", how="outer")
         assert_series_equal(res.dtypes, answer.dtypes)
         assert_frame_equal(res, answer)
@@ -318,16 +237,8 @@ class TestCatAstype(TestCase):
         df = pd.DataFrame({"Integer": [1, 2], "Float": [10.0, 20.0]})
 
         answer = df.copy(deep=True)
-        answer["Integer"] = pd.Categorical(
-            values=pd.Series([1, 2], dtype=int),
-            categories=pd.Series([1, 2], dtype=int),
-            ordered=True,
-        )
-        answer["Float"] = pd.Categorical(
-            values=pd.Series([10.0, 20.0], dtype=float),
-            categories=pd.Series([10.0, 20.0], dtype=float),
-            ordered=True,
-        )
+        answer = answer.astype(pd.CategoricalDtype(ordered=True))
+
         cat_astype(
             df,
             cat_cols=["Integer", "Float"],
@@ -342,15 +253,11 @@ class TestCatAstype(TestCase):
         df = pd.DataFrame({"Integer": ["1", "2"], "Float": ["10.0", "20.0"]})
 
         answer = df.copy(deep=True)
-        answer["Integer"] = pd.Categorical(
-            values=pd.Series([1, 2], dtype=int),
-            categories=pd.Series([1, 2], dtype=int),
-            ordered=True,
+        answer["Integer"] = pd.Series([1, 2], dtype=int).astype(
+            pd.CategoricalDtype(ordered=True)
         )
-        answer["Float"] = pd.Categorical(
-            values=pd.Series([10.0, 20.0], dtype=float),
-            categories=pd.Series([10.0, 20.0], dtype=float),
-            ordered=True,
+        answer["Float"] = pd.Series([10.0, 20.0], dtype=float).astype(
+            pd.CategoricalDtype(ordered=True)
         )
         cat_astype(
             df,
@@ -376,15 +283,11 @@ class TestCatAstype(TestCase):
         )
 
         answer = df.copy(deep=True)
-        answer["Integer"] = pd.Categorical(
-            values=pd.Series([1, 2], dtype=int),
-            categories=pd.Series([1, 2], dtype=int),
-            ordered=True,
+        answer["Integer"] = pd.Series([1, 2], dtype=int).astype(
+            pd.CategoricalDtype(ordered=True)
         )
-        answer["Float"] = pd.Categorical(
-            values=pd.Series([10.0, 20.0], dtype=float),
-            categories=pd.Series([10.0, 20.0], dtype=float),
-            ordered=True,
+        answer["Float"] = pd.Series([10.0, 20.0], dtype=float).astype(
+            pd.CategoricalDtype(ordered=True)
         )
         cat_astype(
             df,
