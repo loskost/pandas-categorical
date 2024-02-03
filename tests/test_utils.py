@@ -2,6 +2,7 @@ from unittest import TestCase
 from typing import Tuple
 
 import pandas as pd
+
 from pandas.testing import assert_frame_equal, assert_series_equal
 from pandas_categorical.utils import cat_astype, concat_categorical, merge_categorical
 
@@ -296,6 +297,36 @@ class TestCatAstype(TestCase):
             ordered_cols={"Integer", "Float"},
             remove_unused_categories=True,
         )
+
+        assert_series_equal(df.dtypes, answer.dtypes)
+        assert_frame_equal(df, answer)
+
+    def test_replace_ordered_to_unordered(self) -> None:
+        df = pd.DataFrame(
+            {
+                "Integer": [1, 4, 2, 5, 10],
+                "Float": [1.0, 4.0, 2.0, 5.0, 10.0],
+                "Bool": [True, False, False, True, False],
+                "String": ["1", "4", "2", "5", "10"],
+                "Object": [1, "4", 2, "5", 10],
+                "id": range(5),
+            }
+        )
+        cat_cols = ["Integer", "Float", "Bool", "String", "Object"]
+        ordered_cols = {"Integer", "Bool", "String"}
+        for col in cat_cols:
+            df[col] = df[col].astype("category")
+        for col in ordered_cols:
+            df[col] = df[col].cat.as_ordered()
+
+        new_ordered_cols = {"Float", "Bool", "Object"}
+        answer = df.copy(deep=True)
+        for col in new_ordered_cols.difference(ordered_cols):
+            answer[col] = answer[col].cat.as_ordered()
+        for col in ordered_cols.difference(new_ordered_cols):
+            answer[col] = answer[col].cat.as_unordered()
+
+        cat_astype(df, cat_cols=cat_cols, ordered_cols=new_ordered_cols)
 
         assert_series_equal(df.dtypes, answer.dtypes)
         assert_frame_equal(df, answer)
