@@ -90,6 +90,11 @@ def cat_astype(
         if col not in already_cat:
             is_ordered = col in ordered_cols
             data[col] = data[col].astype(pd.CategoricalDtype(ordered=is_ordered))
+        else:
+            if col not in ordered_cols and data[col].cat.ordered:
+                data[col] = data[col].cat.as_unordered()
+            elif col in ordered_cols and not data[col].cat.ordered:
+                data[col] = data[col].cat.as_ordered()
         if (remove_unused_categories) and (
             data[col].dropna().unique().shape[0] != data[col].cat.categories.shape[0]
         ):
