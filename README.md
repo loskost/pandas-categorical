@@ -111,18 +111,20 @@ df.groupby(['cat_col_1', 'cat_col_2'], observed=True).agg('mean')
 
 ## 4. Ordered categories
 
-There is no simple method to create ordered categorical columns.
-In addition to the name, you need to explicitly specify the categories themselves in the right order.
-To simplify, it is suggested to always use the same sort order.
-For example,
+There is a understandable instruction for converting a column type to a categorical (unordered) one
 ```python
-df['ordered_col'] = pd.Categorical(
-	df['ordered_col'],
-	categories=np.sort(data['ordered_col'].dropna().unique()),
-	ordered=True,
-)
+df[col] = df[col].astype('category')
 ```
-Note: Categories cannot contain `NaN` values, so `.dropna()` is required.
+But there is no similar command to convert to an ordered categorical type.
+There are two non-obvious ways:
+```python
+df[col] = df[col].astype('category').cat.as_ordered()
+```
+Or
+```python
+df[col] = df[col].astype(pd.CategoricalDtype(ordered=True))
+```
+
 
 ## 5. Minimum copying
 
