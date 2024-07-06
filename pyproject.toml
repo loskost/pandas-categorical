@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Operating System :: OS Independent",
     "Topic :: Utilities",
@@ -29,17 +30,17 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.7, <3.12"
+python = ">=3.7, <3.13"
 pandas = [
     {version = ">=1.0.0, <1.4.0", python = "~3.7"},
     {version = "^1.4.0", python = "~3.8"},
-    {version = "^2.0.0", python = ">=3.9, <3.12"},
+    {version = "^2.0.0", python = ">=3.9, <3.13"},
 ]
 
 [tool.poetry.group.dev.dependencies]
 pytest = [
     {version = "<8.0.0", python = "~3.7"},
-    {version = ">=8.0.0", python = ">=3.8, <3.12"},
+    {version = ">=8.0.0", python = ">=3.8, <3.13"},
 ]
 
 [build-system]
